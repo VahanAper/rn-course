@@ -1,13 +1,28 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    View,
+    TextInput,
+    StyleSheet,
+} from 'react-native';
 
 export default class App extends React.Component {
+    state = {
+        placeName: '',
+    }
+    
+    placeNameChangeHandler = (placeName) => {
+        this.setState({ placeName });
+    }
+    
     render() {
         return (
             <View style={styles.container}>
-                <Text>Open up App.js to start working on your app!</Text>
-                <Text>Changes you make will automatically reload.</Text>
-                <Text>Shake your phone to open the developer menu.</Text>
+                <TextInput
+                    placeholder="An awesome place"
+                    style={styles.inputStyles}
+                    value={this.state.placeName}
+                    onChangeText={this.placeNameChangeHandler}
+                />
             </View>
         );
     }
@@ -16,8 +31,12 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        padding: 20,
         alignItems: 'center',
-        justifyContent: 'center',
+        backgroundColor: '#fff',
+        justifyContent: 'flex-start',
     },
+    inputStyles: {
+        width: 300,
+    }
 });
