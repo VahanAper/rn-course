@@ -23,16 +23,18 @@ export default class App extends React.Component {
         if (this.state.placeName.trim()) {
             this.setState((prevState) => {
                 return {
-                    // placeName: '',
-                    places: prevState.places.concat(this.state.placeName),
+                    places: prevState.places.concat({
+                        key: new Date().valueOf(),
+                        text: this.state.placeName,
+                    }),
                 }
             })
         }
     }
     
-    deletePlace = (index) => {
+    deletePlace = (key) => {
         this.setState((prevState) => ({
-            places: prevState.places.filter((place, i) => i !== index ),
+            places: prevState.places.filter((place) => place.key !== key ),
         }));
     }
     
