@@ -30,6 +30,12 @@ export default class App extends React.Component {
         }
     }
     
+    deletePlace = (index) => {
+        this.setState((prevState) => ({
+            places: prevState.places.filter((place, i) => i !== index ),
+        }));
+    }
+    
     render() {
         return (
             <View style={styles.container}>
@@ -48,7 +54,10 @@ export default class App extends React.Component {
                 </View>
                 
                 <View style={styles.listContainer}>
-                    <List data={this.state.places} />
+                    <List
+                        data={this.state.places}
+                        onItemPress={this.deletePlace}
+                    />
                 </View>
             </View>
         );
@@ -70,7 +79,6 @@ const styles = StyleSheet.create({
         width: '30%',
     },
     inputContainer: {
-        // flex: 1,
         width: '100%',
         flexDirection: 'row',
         alignItems: 'center',

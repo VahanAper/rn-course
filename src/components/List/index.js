@@ -8,7 +8,7 @@ const List = (props) => {
             <ListItem
                 key={index}
                 text={item}
-                onItemPress={() => alert(index)}
+                onItemPress={() => props.onItemPress(index)}
             />
         );
     });
