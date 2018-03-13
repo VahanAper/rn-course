@@ -1,6 +1,8 @@
 import React from 'react';
 import {
     View,
+    Text,
+    Button,
     TextInput,
     StyleSheet,
 } from 'react-native';
@@ -8,21 +10,44 @@ import {
 export default class App extends React.Component {
     state = {
         placeName: '',
+        places: [],
     }
     
     placeNameChangeHandler = (placeName) => {
         this.setState({ placeName });
     }
     
+    placeSubmitHandler = () => {
+        if (this.state.placeName.trim()) {
+            this.setState((prevState) => {
+                return {
+                    placeName: '',
+                    places: prevState.places.concat(this.state.placeName),
+                }
+            })
+        }
+    }
+    
     render() {
         return (
             <View style={styles.container}>
-                <TextInput
-                    placeholder="An awesome place"
-                    style={styles.inputStyles}
-                    value={this.state.placeName}
-                    onChangeText={this.placeNameChangeHandler}
-                />
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        style={styles.placeInput}
+                        value={this.state.placeName}
+                        placeholder="An awesome place"
+                        onChangeText={this.placeNameChangeHandler}
+                    />
+                    <Button
+                        title="ADD"
+                        style={styles.placeButton}
+                        onPress={this.placeSubmitHandler}
+                    />
+                </View>
+                
+                <View>
+                    {this.state.places.map((place, i) => <Text key={i}>{place}</Text>)}
+                </View>
             </View>
         );
     }
@@ -36,7 +61,17 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'flex-start',
     },
-    inputStyles: {
-        width: 300,
-    }
+    placeInput: {
+        width: '70%',
+    },
+    placeButton: {
+        width: '30%',
+    },
+    inputContainer: {
+        // flex: 1,
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
 });
