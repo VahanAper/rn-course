@@ -7,7 +7,7 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import ListItem from './src/components/ListItem';
+import List from './src/components/List';
 
 export default class App extends React.Component {
     state = {
@@ -30,15 +30,6 @@ export default class App extends React.Component {
         }
     }
     
-    renderPlaces = () => {
-        return this.state.places.map((place, index) => (
-            <ListItem
-                key={index}
-                text={place}
-            />
-        ));
-    }
-    
     render() {
         return (
             <View style={styles.container}>
@@ -57,7 +48,7 @@ export default class App extends React.Component {
                 </View>
                 
                 <View style={styles.listContainer}>
-                    {this.renderPlaces()}
+                    <List data={this.state.places} />
                 </View>
             </View>
         );
