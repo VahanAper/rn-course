@@ -1,9 +1,12 @@
 import React from 'react';
+import {
+    ScrollView,
+} from 'react-native';
 
 import ListItem from '../ListItem';
 
 const List = (props) => {
-    return props.data.map((item, index) => {
+    const items = props.data.map((item, index) => {
         return (
             <ListItem
                 key={index}
@@ -12,6 +15,12 @@ const List = (props) => {
             />
         );
     });
+    
+    return (
+        <ScrollView>
+            {items}
+        </ScrollView>
+    );
 };
 
 export default List;
