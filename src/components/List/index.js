@@ -13,6 +13,7 @@ const List = (props) => {
                 <ListItem
                     key={item.key}
                     text={item.text}
+                    image={item.image}
                     onItemPress={() => props.onItemPress(item.key)}
                 />
             )}

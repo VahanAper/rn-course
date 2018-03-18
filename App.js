@@ -9,6 +9,8 @@ import {
 
 import List from './src/components/List';
 
+import placeImage from './assets/doh.jpg';
+
 export default class App extends React.Component {
     state = {
         placeName: '',
@@ -26,6 +28,7 @@ export default class App extends React.Component {
                     places: prevState.places.concat({
                         key: new Date().valueOf(),
                         text: this.state.placeName,
+                        image: placeImage,
                     }),
                 }
             })
