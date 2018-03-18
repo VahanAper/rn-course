@@ -19,7 +19,7 @@ const reducer = (state = initialState, action) => {
                 image: {
                     uri: 'https://vignette.wikia.nocookie.net/southpark/images/6/6f/KennyMcCormick.png/revision/latest?cb=20160409020502',
                 },
-            }),
+            });
             
             return {
                 ...state,
@@ -27,11 +27,9 @@ const reducer = (state = initialState, action) => {
             };
             
         case DELETE_PLACE:
-            const places = state.places.filter(place => place.key !== state.selectedPlace.key);
-            
             return {
                 ...state,
-                places,
+                places: state.places.filter(place => place.key !== state.selectedPlace.key),
                 selectedPlace: null,
             };
             

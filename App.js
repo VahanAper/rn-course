@@ -23,8 +23,6 @@ import {
 class App extends React.Component {
     state = {
         placeName: '',
-        places: [],
-        selectedPlace: null,
     }
     
     placeNameChangeHandler = (placeName) => {
@@ -32,36 +30,19 @@ class App extends React.Component {
     }
     
     placeSubmitHandler = () => {
-        if (this.state.placeName.trim()) {
-            this.setState((prevState) => {
-                return {
-                    places: prevState.places.concat({
-                        key: new Date().valueOf(),
-                        text: this.state.placeName,
-                        image: {
-                            uri: 'https://vignette.wikia.nocookie.net/southpark/images/6/6f/KennyMcCormick.png/revision/latest?cb=20160409020502',
-                        },
-                    }),
-                }
-            })
-        }
+        this.props.onAddPlace(this.state.placeName);
     }
     
     onItemSelect = (key) => {
-        this.setState((prevState) => ({
-            selectedPlace: prevState.places.find(place => place.key === key),
-        }));
+        this.props.onSelectPlace(key);
     }
     
     deletePlace = () => {
-        this.setState((prevState) => ({
-            places: prevState.places.filter((place) => place.key !== prevState.selectedPlace.key ),
-            selectedPlace: null,
-        }));
+        this.props.onDeletePlace();
     }
     
     closeModal = () => {
-        this.setState({ selectedPlace: null });
+        this.props.onDeselectPlace();
     }
     
     render() {
@@ -71,7 +52,7 @@ class App extends React.Component {
                 <PlaceDetail
                     onClose={this.closeModal}
                     onDelete={this.deletePlace}
-                    selected={this.state.selectedPlace}
+                    selected={this.props.selectedPlace}
                 />
                 
                 <View style={styles.inputContainer}>
@@ -90,7 +71,7 @@ class App extends React.Component {
                 
                 <View style={styles.listContainer}>
                     <List
-                        data={this.state.places}
+                        data={this.props.places}
                         onItemPress={this.onItemSelect}
                     />
                 </View>
