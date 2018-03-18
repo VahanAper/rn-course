@@ -8,13 +8,13 @@ import {
 } from 'react-native';
 
 import List from './src/components/List';
-
-import placeImage from './assets/doh.jpg';
+import PlaceDetail from './src/components/PlaceDetail';
 
 export default class App extends React.Component {
     state = {
         placeName: '',
         places: [],
+        selectedPlace: null,
     }
     
     placeNameChangeHandler = (placeName) => {
@@ -28,7 +28,6 @@ export default class App extends React.Component {
                     places: prevState.places.concat({
                         key: new Date().valueOf(),
                         text: this.state.placeName,
-                        // image: placeImage,
                         image: {
                             uri: 'https://vignette.wikia.nocookie.net/southpark/images/6/6f/KennyMcCormick.png/revision/latest?cb=20160409020502',
                         },
@@ -38,15 +37,33 @@ export default class App extends React.Component {
         }
     }
     
-    deletePlace = (key) => {
+    onItemSelect = (key) => {
         this.setState((prevState) => ({
-            places: prevState.places.filter((place) => place.key !== key ),
+            selectedPlace: prevState.places.find(place => place.key === key),
         }));
+    }
+    
+    deletePlace = () => {
+        this.setState((prevState) => ({
+            places: prevState.places.filter((place) => place.key !== prevState.selectedPlace.key ),
+            selectedPlace: null,
+        }));
+    }
+    
+    closeModal = () => {
+        this.setState({ selectedPlace: null });
     }
     
     render() {
         return (
             <View style={styles.container}>
+                
+                <PlaceDetail
+                    onClose={this.closeModal}
+                    onDelete={this.deletePlace}
+                    selected={this.state.selectedPlace}
+                />
+                
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.placeInput}
@@ -64,7 +81,7 @@ export default class App extends React.Component {
                 <View style={styles.listContainer}>
                     <List
                         data={this.state.places}
-                        onItemPress={this.deletePlace}
+                        onItemPress={this.onItemSelect}
                     />
                 </View>
             </View>
