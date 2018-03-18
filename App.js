@@ -6,11 +6,21 @@ import {
     TextInput,
     StyleSheet,
 } from 'react-native';
+import {
+    connect,
+} from 'react-redux';
 
 import List from './src/components/List';
 import PlaceDetail from './src/components/PlaceDetail';
 
-export default class App extends React.Component {
+import {
+    addPlace,
+    deletePlace,
+    selectPlace,
+    deselectPlace,
+} from './src/store/actions';
+
+class App extends React.Component {
     state = {
         placeName: '',
         places: [],
@@ -113,3 +123,17 @@ const styles = StyleSheet.create({
         width: '100%',
     },
 });
+
+const mapStateToProps = (state) => ({
+    places: state.places.places,
+    selectedPlace: state.places.selectedPlace,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    onAddPlace: (name) => dispatch(addPlace(name)),
+    onDeletePlace: () => dispatch(deletePlace()),
+    onSelectPlace: (key) => dispatch(selectPlace(key)),
+    onDeselectPlace: () => dispatch(deselectPlace()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
