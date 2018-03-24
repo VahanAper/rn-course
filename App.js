@@ -5,6 +5,7 @@ import AuthScreen from './src/screens/Auth';
 import SharePlaceScreen from './src/screens/SharePlace';
 import FindPlaceScreen from './src/screens/FindPlace';
 import PlaceDetailScreen from './src/screens/PlaceDetail';
+import SideDrawerScreen from './src/screens/SideDrawer';
 
 import configureStore from './src/store/configureStore';
 
@@ -34,6 +35,10 @@ Navigation.registerComponent(
     () => PlaceDetailScreen,
     store,
     Provider,
+);
+Navigation.registerComponent(
+    'rncourse.SideDrawerScreen',
+    () => SideDrawerScreen,
 );
 
 // Start the App

@@ -10,6 +10,22 @@ import {
 import List from '../../components/List';
 
 class FindPlaceScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    }
+    
+    onNavigatorEvent = (event) => {
+        if (event.type === 'NavBarButtonPress') {
+            if (event.id === 'sideDrawerToggle') {
+                this.props.navigator.toggleDrawer({
+                    side: 'left',
+                });
+            }
+        }
+    }
+    
     onItemPress = (key) => {
         const place = this.props.places.find(place => place.key === key) || {};
         

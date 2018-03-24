@@ -14,6 +14,22 @@ import {
 } from '../../store/actions';
 
 class SharePlaceScreen extends React.Component {
+    constructor(props) {
+        super(props);
+        
+        props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
+    }
+    
+    onNavigatorEvent = (event) => {
+        if (event.type === 'NavBarButtonPress') {
+            if (event.id === 'sideDrawerToggle') {
+                this.props.navigator.toggleDrawer({
+                    side: 'left',
+                });
+            }
+        }
+    }
+    
     render() {
         return (
             <View>
