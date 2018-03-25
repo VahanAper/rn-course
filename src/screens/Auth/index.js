@@ -7,6 +7,7 @@ import {
 
 import Input from '../../components/UI/Input';
 import Heading from '../../components/UI/Heading';
+import MainText from '../../components/UI/MainText';
 
 import startTabs from '../MainTabs/startMainTabs';
 
@@ -18,7 +19,9 @@ class AuthScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Heading>Please Log In</Heading>
+                <MainText>
+                    <Heading>Please Log In</Heading>
+                </MainText>
                 <Button
                     title="Switch to Login"
                 />
