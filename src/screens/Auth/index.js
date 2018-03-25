@@ -19,29 +19,14 @@ class AuthScreen extends React.Component {
     constructor(props) {
         super(props);
         
-        const portraitStyles = {
-            passwordWidth: '100%',
-            passwordAlign: 'flex-start',
-            passwordDirection: 'column',
-        };
-        const landscapeStyles = {
-            passwordWidth: '49%',
-            passwordAlign: 'space-between',
-            passwordDirection: 'row',
-        }
-        
         this.state = {
             isShortHeight: this.isShortHeight(),
-            responsiveStyles: portraitStyles,
         };
         
         Dimensions.addEventListener('change', (dims) => {
             const isShortHeight = this.isShortHeight();
             
-            this.setState({
-                isShortHeight,
-                responsiveStyles: isShortHeight ? landscapeStyles : portraitStyles,
-            });
+            this.setState({ isShortHeight });
         });
     }
     
@@ -54,7 +39,13 @@ class AuthScreen extends React.Component {
     }
 
     render() {
-        const { responsiveStyles, isShortHeight } = this.state;
+        const { isShortHeight } = this.state;
+        const {
+            portraitInput,
+            landscapeInput,
+            portraitContainer,
+            landscapeContainer,
+        } = styles;
         
         let headingText = null;
         
@@ -73,31 +64,21 @@ class AuthScreen extends React.Component {
                     {headingText}
                     
                     <Button color="#29AAF4" onPress={() => {}}>Switch to Login</Button>
+                    
                     <View style={styles.inputContainer}>
                         <Input placeholder="Your Email" style={styles.input} />
                         
-                        <View
-                            style={{
-                                flexDirection: responsiveStyles.passwordDirection,
-                                justifyContent: responsiveStyles.passwordAlign,
-                            }}
-                        >
-                            <View
-                                style={{
-                                    width: responsiveStyles.passwordWidth,
-                                }}
-                            >
+                        <View style={isShortHeight ? portraitContainer : landscapeContainer}>
+                            <View style={isShortHeight ? portraitInput : landscapeInput}>
                                 <Input placeholder="Password" style={styles.input} />
                             </View>
-                            <View
-                                style={{
-                                    width: responsiveStyles.passwordWidth,
-                                }}
-                            >
+                            
+                            <View style={isShortHeight ? portraitInput : landscapeInput}>
                                 <Input placeholder="Confirm Password" style={styles.input} />
                             </View>
                         </View>
                     </View>
+                    
                     <Button color="#29AAF4" onPress={this.logInUser}>Submit</Button>
                 </View>
             </ImageBackground>
@@ -121,6 +102,20 @@ const styles = StyleSheet.create({
     backgroundImage: {
         flex: 1,
         width: '100%',
+    },
+    landscapeContainer: {
+        justifyContent: 'flex-start',
+        flexDirection: 'column',
+    },
+    landscapeInput: {
+        width: '100%',
+    },
+    portraitContainer: {
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+    },
+    portraitInput: {
+        width: '49%',
     },
 });
 
