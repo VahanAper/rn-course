@@ -6,9 +6,9 @@ import {
 
 const Input = (props) => (
     <TextInput
-        style={styles.input}
         underlineColorAndroid="transparent"
         {...props}
+        style={[ styles.input, props.style ]}
     />
 );
 

@@ -23,9 +23,9 @@ class AuthScreen extends React.Component {
                     title="Switch to Login"
                 />
                 <View style={styles.inputContainer}>
-                    <Input placeholder="Your Email" />
-                    <Input placeholder="Password" />
-                    <Input placeholder="Confirm Password" />
+                    <Input placeholder="Your Email" style={styles.input} />
+                    <Input placeholder="Password" style={styles.input} />
+                    <Input placeholder="Confirm Password" style={styles.input} />
                 </View>
                 <Button
                     title="Log in"
@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
     },
     inputContainer: {
         width: '80%',
+    },
+    input: {
+        backgroundColor: '#eeeeee',
+        borderColor: '#bbbbbb',
     },
 });
 
