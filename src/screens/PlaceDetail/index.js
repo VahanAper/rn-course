@@ -4,6 +4,7 @@ import {
     Text,
     Image,
     Button,
+    Platform,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
@@ -41,7 +42,7 @@ class PlaceDetail extends React.Component {
                             <Icon
                                 size={30}
                                 color="red"
-                                name="ios-trash"
+                                name={Platform.OS === 'ios' ? 'ios-trash' : 'md-trash'}
                             />
                         </View>
                     </TouchableOpacity>

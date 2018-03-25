@@ -2,6 +2,7 @@ import React from 'react';
 import {
     View,
     Text,
+    Platform,
     StyleSheet,
     Dimensions,
     TouchableOpacity,
@@ -22,8 +23,8 @@ class SideDrawer extends React.Component {
                         <Icon
                             size={30}
                             color="#aaaaaa"
-                            name="ios-log-out"
                             style={styles.drawerItemIcon}
+                            name={Platform.OS === 'ios' ? 'ios-log-out' : 'md-log-out'}
                         />
                         <Text>Sign Out</Text>
                     </View>
