@@ -1,8 +1,6 @@
 import React from 'react';
 import {
     View,
-    Text,
-    Image,
     Button,
     ScrollView,
     StyleSheet,
@@ -11,11 +9,11 @@ import {
     connect,
 } from 'react-redux';
 
-import Input from '../../components/UI/Input';
 import Heading from '../../components/UI/Heading';
 import MainText from '../../components/UI/MainText';
-
-import placeholderImage from '../../../assets/milky-way.jpg'
+import PlaceInput from '../../components/PlaceInput';
+import PickImage from '../../components/PickImage';
+import PickLocation from '../../components/PickLocation';
 
 import {
     addPlace,
@@ -46,29 +44,14 @@ class SharePlaceScreen extends React.Component {
                         <Heading>Share a Place with us!</Heading>
                     </MainText>
                     
-                    <View style={styles.placeholder}>
-                        <Image
-                            source={placeholderImage}
-                            style={styles.previewImage}
-                        />
-                    </View>
+                    <PickImage />
+                    
+                    <PickLocation />
+                    
+                    <PlaceInput />
                     
                     <View style={styles.button}>
-                        <Button title="Pick Image" />
-                    </View>
-                    
-                    <View style={styles.placeholder}>
-                        <Text>Text</Text>
-                    </View>
-                    
-                    <View style={styles.button}>
-                        <Button title="Locate Me" />
-                    </View>
-                    
-                    <Input placeholder="Place Name" />
-                    
-                    <View style={styles.button}>
-                        <Button title="Share the Place!" />
+                        <Button title="Share the Place!" onPress={() => {}} />
                     </View>
                 </View>
             </ScrollView>
@@ -81,19 +64,8 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
     },
-    placeholder: {
-        height: 150,
-        width: '80%',
-        borderWidth: 1,
-        borderColor: 'black',
-        backgroundColor: '#eeeeee',
-    },
     button: {
         margin: 5,
-    },
-    previewImage: {
-        width: '100%',
-        height: '100%',
     },
 });
 
