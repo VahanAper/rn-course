@@ -2,6 +2,7 @@ import React from 'react';
 import {
     View,
     Text,
+    Animated,
     StyleSheet,
     TouchableOpacity,
 } from 'react-native';
@@ -18,6 +19,7 @@ class FindPlaceScreen extends React.Component {
     
     state = {
         placesLoaded: false,
+        removeAnimation: new Animated.Value(1),
     }
     
     constructor(props) {
@@ -49,18 +51,39 @@ class FindPlaceScreen extends React.Component {
     }
     
     searchPlaces = () => {
-        this.setState({ placesLoaded: true });
+        Animated.timing(this.state.removeAnimation, {
+            toValue: 0,
+            duration: 500,
+            useNativeDriver: true,
+        }).start();
     }
     
     render() {
-        const { placesLoaded } = this.state;
+        const {
+            placesLoaded,
+            removeAnimation,
+        } = this.state;
         
         let content = (
-            <TouchableOpacity onPress={this.searchPlaces}>
-                <View style={styles.search}>
-                    <Text style={styles.text}>Search</Text>
-                </View>
-            </TouchableOpacity>
+            <Animated.View
+                style={{
+                    opacity: removeAnimation,
+                    transform: [
+                        {
+                            scale: removeAnimation.interpolate({
+                                inputRange: [ 0, 1 ],
+                                outputRange: [ 12, 1 ],
+                            }),
+                        },
+                    ],
+                }}
+            >
+                <TouchableOpacity onPress={this.searchPlaces}>
+                    <View style={styles.search}>
+                        <Text style={styles.text}>Search</Text>
+                    </View>
+                </TouchableOpacity>
+            </Animated.View>
         );
         
         if (placesLoaded) {
