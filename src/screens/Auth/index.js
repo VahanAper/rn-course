@@ -23,11 +23,15 @@ class AuthScreen extends React.Component {
             isShortHeight: this.isShortHeight(),
         };
         
-        Dimensions.addEventListener('change', (dims) => {
-            const isShortHeight = this.isShortHeight();
-            
-            this.setState({ isShortHeight });
-        });
+        Dimensions.addEventListener('change', this.getOrientation);
+    }
+    
+    componentWillUnmount() {
+        Dimensions.removeEventListener('change', this.getOrientation);
+    }
+    
+    getOrientation = () => {
+        this.setState({ isShortHeight: this.isShortHeight() });
     }
     
     isShortHeight = () => {
