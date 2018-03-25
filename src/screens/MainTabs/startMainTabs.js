@@ -45,6 +45,13 @@ const startTabs = () => {
                     },
                 },
             ],
+            tabsStyle: {
+                tabBarSelectedButtonColor: 'orange',
+            },
+            // this property is added for android to work
+            appStyle: {
+                tabBarSelectedButtonColor: 'orange',
+            },
             drawer: {
                 left: {
                     screen: 'rncourse.SideDrawerScreen',

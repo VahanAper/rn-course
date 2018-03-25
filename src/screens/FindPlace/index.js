@@ -10,6 +10,10 @@ import {
 import List from '../../components/List';
 
 class FindPlaceScreen extends React.Component {
+    static navigatorStyle = {
+        navBarButtonColor: 'orange',
+    }
+    
     constructor(props) {
         super(props);
         

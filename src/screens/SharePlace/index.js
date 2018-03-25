@@ -20,6 +20,10 @@ import {
 } from '../../store/actions';
 
 class SharePlaceScreen extends React.Component {
+    static navigatorStyle = {
+        navBarButtonColor: 'orange',
+    }
+    
     constructor(props) {
         super(props);
         
