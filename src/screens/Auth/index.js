@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     View,
-    Text,
     Button,
     StyleSheet,
 } from 'react-native';
 
 import Input from '../../components/UI/Input';
+import Heading from '../../components/UI/Heading';
 
 import startTabs from '../MainTabs/startMainTabs';
 
@@ -18,7 +18,7 @@ class AuthScreen extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text>Please Log In</Text>
+                <Heading>Please Log In</Heading>
                 <Button
                     title="Switch to Login"
                 />
