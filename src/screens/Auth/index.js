@@ -20,6 +20,29 @@ class AuthScreen extends React.Component {
         super(props);
         
         this.state = {
+            controls: {
+                email: {
+                    value: '',
+                    valid: false,
+                    validationRules: {
+                        isEmail: true,
+                    },
+                },
+                password: {
+                    value: '',
+                    valid: false,
+                    validationRules: {
+                        minLength: 6,
+                    },
+                },
+                confirmPassword: {
+                    value: '',
+                    valid: false,
+                    validationRules: {
+                        equalTo: 'password',
+                    },
+                },
+            },
             isShortHeight: this.isShortHeight(),
         };
         
@@ -40,6 +63,18 @@ class AuthScreen extends React.Component {
     
     logInUser = () => {
         startTabs();
+    }
+    
+    updateInputState = (key, value) => {
+        this.setState(prevState => ({
+            controls: {
+                ...prevState.controls,
+                [key]: {
+                    ...prevState.controls[key],
+                    value
+                },
+            },
+        }));
     }
 
     render() {
@@ -70,15 +105,30 @@ class AuthScreen extends React.Component {
                     <Button color="#29AAF4" onPress={() => {}}>Switch to Login</Button>
                     
                     <View style={styles.inputContainer}>
-                        <Input placeholder="Your Email" style={styles.input} />
+                        <Input
+                            style={styles.input}
+                            placeholder="Your Email"
+                            value={this.state.controls.email.value}
+                            onChangeText={(value) => this.updateInputState('email', value)}
+                        />
                         
                         <View style={isShortHeight ? portraitContainer : landscapeContainer}>
                             <View style={isShortHeight ? portraitInput : landscapeInput}>
-                                <Input placeholder="Password" style={styles.input} />
+                                <Input
+                                    style={styles.input}
+                                    placeholder="Password"
+                                    value={this.state.controls.password.value}
+                                    onChangeText={(value) => this.updateInputState('password', value)}
+                                />
                             </View>
                             
                             <View style={isShortHeight ? portraitInput : landscapeInput}>
-                                <Input placeholder="Confirm Password" style={styles.input} />
+                                <Input
+                                    style={styles.input}
+                                    placeholder="Confirm Password"
+                                    value={this.state.controls.confirmPassword.value}
+                                    onChangeText={(value) => this.updateInputState('confirmPassword', value)}
+                                />
                             </View>
                         </View>
                     </View>
