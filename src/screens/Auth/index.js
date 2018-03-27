@@ -12,6 +12,7 @@ import MainText from '../../components/UI/MainText';
 import Button from '../../components/UI/Button';
 
 import startTabs from '../MainTabs/startMainTabs';
+import validate from '../../utility/validation';
 
 import backgroundImage from '../../../assets/milky-way.jpg';
 
@@ -66,12 +67,42 @@ class AuthScreen extends React.Component {
     }
     
     updateInputState = (key, value) => {
+        const equalControl = this.state.controls[key].validationRules.equalTo;
+        let connectedValue = {};
+        
+        if (equalControl) {
+            const equalValue = this.state.controls[equalControl].value;
+            
+            connectedValue = {
+                ...connectedValue,
+                equalTo: equalValue,
+            };
+        }
+        
+        if (key === 'password') {
+            connectedValue = {
+                ...connectedValue,
+                equalTo: value,
+            };
+        }
+        
         this.setState(prevState => ({
             controls: {
                 ...prevState.controls,
+                confirmPassword: {
+                    ...prevState.controls.confirmPassword,
+                    valid: key === 'password'
+                    ? validate(
+                        prevState.controls.confirmPassword.value,
+                        prevState.controls.confirmPassword.validationRules,
+                        connectedValue,
+                    )
+                    : prevState.controls.confirmPassword.valid,
+                },
                 [key]: {
                     ...prevState.controls[key],
-                    value
+                    value,
+                    valid: validate(value, prevState.controls[key].validationRules, connectedValue),
                 },
             },
         }));
