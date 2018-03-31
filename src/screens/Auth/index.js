@@ -28,6 +28,7 @@ class AuthScreen extends React.Component {
                     validationRules: {
                         isEmail: true,
                     },
+                    touched: false,
                 },
                 password: {
                     value: '',
@@ -35,6 +36,7 @@ class AuthScreen extends React.Component {
                     validationRules: {
                         minLength: 6,
                     },
+                    touched: false,
                 },
                 confirmPassword: {
                     value: '',
@@ -42,6 +44,7 @@ class AuthScreen extends React.Component {
                     validationRules: {
                         equalTo: 'password',
                     },
+                    touched: false,
                 },
             },
             isShortHeight: this.isShortHeight(),
@@ -102,6 +105,7 @@ class AuthScreen extends React.Component {
                 [key]: {
                     ...prevState.controls[key],
                     value,
+                    touched: true,
                     valid: validate(value, prevState.controls[key].validationRules, connectedValue),
                 },
             },
@@ -109,7 +113,10 @@ class AuthScreen extends React.Component {
     }
 
     render() {
-        const { isShortHeight } = this.state;
+        const {
+            controls,
+            isShortHeight,
+        } = this.state;
         const {
             portraitInput,
             landscapeInput,
@@ -139,7 +146,9 @@ class AuthScreen extends React.Component {
                         <Input
                             style={styles.input}
                             placeholder="Your Email"
-                            value={this.state.controls.email.value}
+                            valid={controls.email.valid}
+                            value={controls.email.value}
+                            touched={controls.email.touched}
                             onChangeText={(value) => this.updateInputState('email', value)}
                         />
                         
@@ -148,7 +157,9 @@ class AuthScreen extends React.Component {
                                 <Input
                                     style={styles.input}
                                     placeholder="Password"
-                                    value={this.state.controls.password.value}
+                                    valid={controls.password.valid}
+                                    value={controls.password.value}
+                                    touched={controls.password.touched}
                                     onChangeText={(value) => this.updateInputState('password', value)}
                                 />
                             </View>
@@ -157,14 +168,26 @@ class AuthScreen extends React.Component {
                                 <Input
                                     style={styles.input}
                                     placeholder="Confirm Password"
-                                    value={this.state.controls.confirmPassword.value}
+                                    valid={controls.confirmPassword.valid}
+                                    value={controls.confirmPassword.value}
+                                    touched={controls.confirmPassword.touched}
                                     onChangeText={(value) => this.updateInputState('confirmPassword', value)}
                                 />
                             </View>
                         </View>
                     </View>
                     
-                    <Button color="#29AAF4" onPress={this.logInUser}>Submit</Button>
+                    <Button
+                        color="#29AAF4"
+                        onPress={this.logInUser}
+                        disabled={
+                            !controls.email.valid
+                            || !controls.password.valid
+                            || !controls. confirmPassword.valid
+                        }
+                    >
+                        Submit
+                    </Button>
                 </View>
             </ImageBackground>
         );
