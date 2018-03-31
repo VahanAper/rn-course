@@ -175,10 +175,13 @@ class AuthScreen extends React.Component {
                     
                     <View style={styles.inputContainer}>
                         <Input
+                            autoCorrect={false}
                             style={styles.input}
+                            autoCapitalize="none"
                             placeholder="Your Email"
                             valid={controls.email.valid}
                             value={controls.email.value}
+                            keyboardType="email-address"
                             touched={controls.email.touched}
                             onChangeText={(value) => this.updateInputState('email', value)}
                         />
@@ -186,6 +189,7 @@ class AuthScreen extends React.Component {
                         <View style={isShortHeight && !isLoginMode ? portraitContainer : landscapeContainer}>
                             <View style={isShortHeight && !isLoginMode ? portraitInput : landscapeInput}>
                                 <Input
+                                    secureTextEntry
                                     style={styles.input}
                                     placeholder="Password"
                                     valid={controls.password.valid}
@@ -198,6 +202,7 @@ class AuthScreen extends React.Component {
                             {!isLoginMode && (
                                 <View style={isShortHeight ? portraitInput : landscapeInput}>
                                     <Input
+                                        secureTextEntry
                                         style={styles.input}
                                         placeholder="Confirm Password"
                                         valid={controls.confirmPassword.valid}
