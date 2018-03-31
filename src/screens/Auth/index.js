@@ -28,6 +28,7 @@ class AuthScreen extends React.Component {
         super(props);
         
         this.state = {
+            isLoginMode: true,
             controls: {
                 email: {
                     value: '',
@@ -62,6 +63,12 @@ class AuthScreen extends React.Component {
     
     componentWillUnmount() {
         Dimensions.removeEventListener('change', this.getOrientation);
+    }
+    
+    switchAuthModeHandler = () => {
+        this.setState(prevState => ({
+            isLoginMode: !prevState.isLoginMode,
+        }));
     }
     
     getOrientation = () => {
@@ -133,6 +140,7 @@ class AuthScreen extends React.Component {
     render() {
         const {
             controls,
+            isLoginMode,
             isShortHeight,
         } = this.state;
         const {
@@ -158,7 +166,12 @@ class AuthScreen extends React.Component {
                     
                     {headingText}
                     
-                    <Button color="#29AAF4" onPress={() => {}}>Switch to Login</Button>
+                    <Button
+                        color="#29AAF4"
+                        onPress={this.switchAuthModeHandler}
+                    >
+                        Switch to {isLoginMode ? 'Sign Up' : 'Login'}
+                    </Button>
                     
                     <View style={styles.inputContainer}>
                         <Input
@@ -170,8 +183,8 @@ class AuthScreen extends React.Component {
                             onChangeText={(value) => this.updateInputState('email', value)}
                         />
                         
-                        <View style={isShortHeight ? portraitContainer : landscapeContainer}>
-                            <View style={isShortHeight ? portraitInput : landscapeInput}>
+                        <View style={isShortHeight && !isLoginMode ? portraitContainer : landscapeContainer}>
+                            <View style={isShortHeight && !isLoginMode ? portraitInput : landscapeInput}>
                                 <Input
                                     style={styles.input}
                                     placeholder="Password"
@@ -182,16 +195,18 @@ class AuthScreen extends React.Component {
                                 />
                             </View>
                             
-                            <View style={isShortHeight ? portraitInput : landscapeInput}>
-                                <Input
-                                    style={styles.input}
-                                    placeholder="Confirm Password"
-                                    valid={controls.confirmPassword.valid}
-                                    value={controls.confirmPassword.value}
-                                    touched={controls.confirmPassword.touched}
-                                    onChangeText={(value) => this.updateInputState('confirmPassword', value)}
-                                />
-                            </View>
+                            {!isLoginMode && (
+                                <View style={isShortHeight ? portraitInput : landscapeInput}>
+                                    <Input
+                                        style={styles.input}
+                                        placeholder="Confirm Password"
+                                        valid={controls.confirmPassword.valid}
+                                        value={controls.confirmPassword.value}
+                                        touched={controls.confirmPassword.touched}
+                                        onChangeText={(value) => this.updateInputState('confirmPassword', value)}
+                                    />
+                                </View>
+                            )}
                         </View>
                     </View>
                     
@@ -201,7 +216,7 @@ class AuthScreen extends React.Component {
                         disabled={
                             !controls.email.valid
                             || !controls.password.valid
-                            || !controls. confirmPassword.valid
+                            || (!isLoginMode && !controls. confirmPassword.valid)
                         }
                     >
                         Submit
