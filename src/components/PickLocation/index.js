@@ -21,12 +21,29 @@ class PickLocation extends React.Component {
         }
     }
     
+    pickLocationHandler = (event) => {
+        const {
+            latitude,
+            longitude,
+        } = event.nativeEvent.coordinate;
+        
+        this.setState((prevState) => ({
+            focusedLocation: {
+                ...prevState.focusedLocation,
+                longitude,
+                latitude,
+            }
+        }));
+    }
+    
     render() {
         return (
             <View style={styles.container}>
                 
                 <MapView
                     style={styles.map}
+                    onPress={this.pickLocationHandler}
+                    region={this.state.focusedLocation}
                     initialRegion={this.state.focusedLocation}
                 />
                 
