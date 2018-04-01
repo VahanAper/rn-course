@@ -29,6 +29,12 @@ class SharePlaceScreen extends React.Component {
         
         this.state = {
             placeName: '',
+            controls: {
+                location: {
+                    value: null,
+                    valid: false,
+                },
+            },
         };
         
         props.navigator.setOnNavigatorEvent(this.onNavigatorEvent);
@@ -45,15 +51,28 @@ class SharePlaceScreen extends React.Component {
     }
     
     createPlace = () => {
-        const { placeName } = this.state;
+        const {
+            controls,
+            placeName,
+        } = this.state;
         
-        if (placeName.trim() !== '') {
-            this.props.onAddPlace(placeName);
-        }
+        this.props.onAddPlace(placeName, controls.location.value);
     }
     
     setPlaceName = (placeName) => {
         this.setState({ placeName });
+    }
+    
+    locationPickedHandler = (location) => {
+        this.setState((prevState) => ({
+            controls: {
+                ...prevState.controls,
+                location: {
+                    value: location,
+                    valid: true,
+                },
+            },
+        }));
     }
     
     render() {
@@ -66,7 +85,7 @@ class SharePlaceScreen extends React.Component {
                     
                     <PickImage />
                     
-                    <PickLocation />
+                    <PickLocation onLocationPick={this.locationPickedHandler} />
                     
                     <PlaceInput
                         onChangeText={this.setPlaceName}
@@ -74,7 +93,11 @@ class SharePlaceScreen extends React.Component {
                     />
                     
                     <View style={styles.button}>
-                        <Button title="Share the Place!" onPress={this.createPlace} />
+                        <Button
+                            title="Share the Place!"
+                            onPress={this.createPlace}
+                            disabled={!this.state.controls.location.valid}
+                        />
                     </View>
                 </View>
             </ScrollView>
@@ -94,7 +117,7 @@ const styles = StyleSheet.create({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddPlace: (placeName) => dispatch(addPlace(placeName)),
+        onAddPlace: (placeName, location) => dispatch(addPlace(placeName, location)),
     };
 }
 

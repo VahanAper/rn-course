@@ -55,7 +55,9 @@ class FindPlaceScreen extends React.Component {
             toValue: 0,
             duration: 500,
             useNativeDriver: true,
-        }).start();
+        }).start(() => {
+            this.setState({ placesLoaded: true });
+        });
     }
     
     render() {

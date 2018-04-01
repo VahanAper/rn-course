@@ -19,6 +19,7 @@ const reducer = (state = initialState, action) => {
                 image: {
                     uri: 'https://vignette.wikia.nocookie.net/southpark/images/6/6f/KennyMcCormick.png/revision/latest?cb=20160409020502',
                 },
+                location: action.location,
             });
             
             return {

@@ -41,6 +41,9 @@ class PickLocation extends React.Component {
                 latitude,
             },
             locationChosen: true,
+        }), this.props.onLocationPick({
+            latitude,
+            longitude,
         }));
     }
     
