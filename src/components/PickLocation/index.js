@@ -13,12 +13,13 @@ import placeholderImage from '../../../assets/milky-way.jpg';
 
 class PickLocation extends React.Component {
     state = {
+        locationChosen: false,
         focusedLocation: {
             latitude: 40.177761,
             longitude: 44.512803,
             latitudeDelta: 0.0122,
             longitudeDelta: Dimensions.get('window').width / Dimensions.get('window').height * 0.0122,
-        }
+        },
     }
     
     pickLocationHandler = (event) => {
@@ -32,20 +33,34 @@ class PickLocation extends React.Component {
                 ...prevState.focusedLocation,
                 longitude,
                 latitude,
-            }
+            },
+            locationChosen: true,
         }));
     }
     
     render() {
+        const { focusedLocation } = this.state;
+        let marker = null;
+        
+        if (this.state.locationChosen) {
+            marker = (
+                <MapView.Marker
+                    coordinate={focusedLocation}
+                />
+            );
+        }
+        
         return (
             <View style={styles.container}>
                 
                 <MapView
                     style={styles.map}
+                    region={focusedLocation}
+                    initialRegion={focusedLocation}
                     onPress={this.pickLocationHandler}
-                    region={this.state.focusedLocation}
-                    initialRegion={this.state.focusedLocation}
-                />
+                >
+                    {marker}
+                </MapView>
                 
                 <View style={styles.button}>
                     <Button title="Locate Me" onPress={() => alert('Locate Me')} />
